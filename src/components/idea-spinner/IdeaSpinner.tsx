@@ -25,12 +25,23 @@ import {
 } from '#/lib/locked-ideas'
 import type { LockedIdea } from '#/lib/locked-ideas'
 import { addWordIssueUrl } from '#/lib/repo'
+import {
+  isSoundEnabled,
+  playLand,
+  playPull,
+  setSoundEnabled,
+} from '#/lib/sound'
 import './idea-spinner.css'
 
 const ITEM_HEIGHT = 144
 
-const IDLE_HOOK =
-  'Somewhere out there, a business is waiting for exactly this. Pull the lever and find them.'
+const IDLE_HOOKS = [
+  'Somewhere out there, a business is waiting for exactly this. Pull the lever and find them.',
+  "Every real product started as someone's random idea. Pull the lever and start yours.",
+  'No blank page. No brainstorm. Just pull the lever and see what you get.',
+  "You don't need a better idea. You need this one. Pull the lever.",
+  `${comboCount.toLocaleString()} combos in here. One of them is what you're building next.`,
+]
 
 const SPIN_MESSAGES = [
   'Scouting for a business that needs this…',
@@ -77,6 +88,10 @@ export function IdeaSpinner({
   const [saved, setSaved] = useState<LockedIdea[]>([])
   const [flash, setFlash] = useState(false)
   const [spinMessageIndex, setSpinMessageIndex] = useState(0)
+  // Fixed on the server so hydration matches; randomized client-side once
+  // mounted so repeat visits don't always see the same idle line.
+  const [idleHookIndex, setIdleHookIndex] = useState(0)
+  const [soundOn, setSoundOn] = useState(true)
   const liveId = useId()
   const booted = useRef(Boolean(shared))
 
@@ -108,6 +123,7 @@ export function IdeaSpinner({
   )
 
   const runSpin = useCallback(async () => {
+    playPull()
     setSpinning(true)
     setLocked(false)
     setBuilt(false)
@@ -179,9 +195,23 @@ export function IdeaSpinner({
   useEffect(() => {
     if (!idea || spinning) return
     setFlash(true)
+    playLand()
     const t = window.setTimeout(() => setFlash(false), 520)
     return () => window.clearTimeout(t)
   }, [idea, spinning])
+
+  useEffect(() => {
+    setSoundOn(isSoundEnabled())
+    setIdleHookIndex(Math.floor(Math.random() * IDLE_HOOKS.length))
+  }, [])
+
+  const toggleSound = useCallback(() => {
+    setSoundOn((prev) => {
+      const next = !prev
+      setSoundEnabled(next)
+      return next
+    })
+  }, [])
 
   useEffect(() => {
     if (!spinning) {
@@ -253,10 +283,21 @@ export function IdeaSpinner({
         <a className="slab-mark" href="/">
           IDEA MACHINE
         </a>
-        <p className="nav-status">
-          <span className="status-led" aria-hidden="true" />
-          <span>{statusLabel}</span>
-        </p>
+        <div className="nav-slab__right">
+          <button
+            type="button"
+            className="sound-toggle"
+            onClick={toggleSound}
+            aria-pressed={soundOn}
+            aria-label={soundOn ? 'Mute sound' : 'Unmute sound'}
+          >
+            {soundOn ? 'SFX ON' : 'SFX OFF'}
+          </button>
+          <p className="nav-status">
+            <span className="status-led" aria-hidden="true" />
+            <span>{statusLabel}</span>
+          </p>
+        </div>
       </header>
 
       <main className="machine__main" aria-label="Idea Machine generator">
@@ -272,7 +313,7 @@ export function IdeaSpinner({
           </h1>
 
           {status === 'idle' ? (
-            <p className="hero__hook">{IDLE_HOOK}</p>
+            <p className="hero__hook">{IDLE_HOOKS[idleHookIndex]}</p>
           ) : status === 'spinning' ? (
             <p className="hero__hook hero__hook--spin" key={spinMessageIndex}>
               {SPIN_MESSAGES[spinMessageIndex]}

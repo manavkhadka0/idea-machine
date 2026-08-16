@@ -70,6 +70,43 @@
   white-space: nowrap;
 }
 
+.nav-slab__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.sound-toggle {
+  appearance: none;
+  margin: 0;
+  padding: var(--space-2xs) var(--space-xs);
+  border: var(--rule-hair) solid var(--color-rule);
+  background: none;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.sound-toggle:hover {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
+.sound-toggle:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.sound-toggle[aria-pressed='true'] {
+  color: var(--color-ink);
+  border-color: var(--color-ink);
+}
+
 .nav-status {
   display: flex;
   align-items: center;

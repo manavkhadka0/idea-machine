@@ -3,6 +3,7 @@
 [![CI](https://github.com/manavkhadka0/idea-machine/actions/workflows/ci.yml/badge.svg)](https://github.com/manavkhadka0/idea-machine/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-cream.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-ff8a3d.svg)](CONTRIBUTING.md)
+[![Live](https://img.shields.io/badge/live-idea--machine-111.svg)](https://idea-machine-puce.vercel.app)
 
 Out of side-project ideas? Pull the lever.
 
@@ -70,6 +71,14 @@ TanStack Start, Vite, React, Framer Motion. Styling is Hallmark Brutal tokens in
 ## Contributing
 
 This is open source and PRs are welcome. Adding a word is the fastest way in — see [Contribute a word](#contribute-a-word) above and [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Please open an issue before any structural or visual change.
+
+## Contributors
+
+Every word in the machine came from someone. Add one and you're on this wall.
+
+[![Contributors](https://contrib.rocks/image?repo=manavkhadka0/idea-machine)](https://github.com/manavkhadka0/idea-machine/graphs/contributors)
+
+Want to talk instead of PR? Use [Discussions](https://github.com/manavkhadka0/idea-machine/discussions) — good spot for "what would you add" or a combo you liked.
 
 ## Author
 
