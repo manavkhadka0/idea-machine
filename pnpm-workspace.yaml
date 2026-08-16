@@ -1,0 +1,14 @@
+allowBuilds:
+  esbuild: true
+  lightningcss: true
+  unrs-resolver: true
+
+# Your local pnpm (11.x) enforces a "minimum release age" supply-chain
+# policy by default: it refuses to install any package version published
+# less than 24h ago (minimumReleaseAge is in minutes; 1440 = 24h). It
+# flagged electron-to-chromium — a transitive dep of browserslist/caniuse
+# used by the build tooling, not something you added — because that
+# package republishes many times a day and is almost always "too fresh."
+# Disabling it here isn't a blanket security downgrade for everything you
+# ever install, just for resolving this project's lockfile.
+minimumReleaseAge: 0

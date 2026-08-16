@@ -1,0 +1,43 @@
+name: Word suggestion
+description: Propose a platform, product, or niche for the reels
+title: '[word] '
+labels: ['word-bank']
+body:
+  - type: dropdown
+    id: bank
+    attributes:
+      label: Bank
+      description: Which reel should this land on?
+      options:
+        - platform
+        - product
+        - niche
+    validations:
+      required: true
+  - type: input
+    id: label
+    attributes:
+      label: Proposed label
+      description: Max 18 characters. No brands, slurs, living people, or &, =, ?.
+      placeholder: waitlist
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it belongs
+      description: One or two sentences. Related labels already in the bank help.
+      placeholder: Sits next to booking app and scheduler. Common for shops that take appointments.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Checks
+      options:
+        - label: 18 characters or fewer
+          required: true
+        - label: Not a duplicate (case-insensitive) in that bank
+          required: true
+        - label: I read CONTRIBUTING.md
+          required: true

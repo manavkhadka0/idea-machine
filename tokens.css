@@ -1,0 +1,106 @@
+/* Hallmark · pre-emit critique: P5 H5 E5 S5 R4 V5
+ * genre: editorial · macrostructure: Manifesto · theme: Brutal
+ * ui: mix A+B · arcade-night HUD console · futuristic instrument panel
+ * tone: brutal · audience: social-video hook · use: spin → lock → build
+ * nav: N7 Brutal slab · knobs: border=3px, tracking=uppercase, CTA=status-led
+ * footer: Ft5 Statement · knobs: width=28ch, wordmark=under, rule=hairline
+ * enrichment: none · display: Black Ops One · body: Space Grotesk
+ */
+
+:root,
+[data-theme='brutal'] {
+  --color-paper: oklch(16% 0.02 25);
+  --color-paper-2: oklch(20% 0.022 25);
+  --color-paper-3: oklch(24% 0.024 25);
+  --color-rule: oklch(38% 0.03 25);
+  --color-rule-2: oklch(52% 0.028 25);
+  --color-muted: oklch(70% 0.02 40);
+  --color-neutral: oklch(82% 0.016 50);
+  --color-ink-2: oklch(90% 0.014 70);
+  --color-ink: oklch(94% 0.012 70);
+  --color-accent: oklch(66% 0.22 25);
+  --color-accent-ink: oklch(66% 0.22 25);
+  --color-focus: oklch(72% 0.2 25);
+  --color-error: oklch(68% 0.2 25);
+  --color-success-ink: oklch(16% 0.02 25);
+
+  --color-slab: oklch(94% 0.014 70);
+  --color-slab-2: oklch(88% 0.016 55);
+  --color-slab-ink: oklch(16% 0.022 25);
+
+  --font-display: 'Black Ops One', ui-sans-serif, sans-serif;
+  --font-body: 'Space Grotesk', ui-sans-serif, sans-serif;
+  --font-serif: 'Space Grotesk', ui-sans-serif, sans-serif;
+  --font-reel: 'Black Ops One', ui-sans-serif, sans-serif;
+  --font-label: 'Space Grotesk', ui-sans-serif, sans-serif;
+  --font-mono: 'Space Grotesk', ui-sans-serif, sans-serif;
+
+  --display-weight: 400;
+  --display-soft: 0;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.125rem;
+  --text-lg: 1.375rem;
+  --text-xl: 1.75rem;
+  --text-2xl: 2.25rem;
+  --text-3xl: 2.75rem;
+  --text-display: clamp(2.75rem, 8vw + 1rem, 6.5rem);
+  --text-display-s: clamp(2rem, 4.5vw + 0.8rem, 4.25rem);
+
+  --lh-tight: 1.02;
+  --lh-snug: 1.15;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.6;
+
+  --tracking-display: 0.02em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-label: 0.08em;
+
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6.5rem;
+  --space-4xl: 9rem;
+  --space-5xl: 13rem;
+
+  --section-gap: 5.5rem;
+  --section-head-gap: 1.25rem;
+  --page-max: 76rem;
+  --page-gutter: clamp(1rem, 4vw, 3rem);
+  --measure: 58ch;
+
+  --rule-hair: 1px;
+  --rule-fine: 3px;
+  --radius-card: 0;
+  --radius-pill: 0;
+  --radius-input: 0;
+  --rule-card: 3px;
+  --shadow-card: none;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms;
+  --dur-short: 220ms;
+  --dur-long: 420ms;
+
+  --z-base: 1;
+  --z-raised: 10;
+  --z-dropdown: 100;
+  --z-sticky: 200;
+  --z-sticky-nav: 300;
+  --z-modal: 400;
+  --z-toast: 500;
+  --z-tooltip: 600;
+
+  --banner-height: 3.5rem;
+  --reel-h: 9rem;
+}

@@ -1,0 +1,15 @@
+{
+  "scanned": "2026-08-16",
+  "fontStack": "IBM Plex Mono + Inter (Google Fonts, src/routes/__root.tsx)",
+  "palette": "inline hex in idea-spinner.css (--bg #0a0a0c, --accent #ff8a3d)",
+  "motion": "framer-motion 13 installed (package.json) — slot-reel animation already present",
+  "spacing": "ad-hoc px values, no 4pt token scale",
+  "framework": "TanStack Start + Vite 8 + Tailwind v4",
+  "preserve": ["slot-reel interaction", "word banks", "route tree"],
+  "introduce": [
+    "Hallmark tokens",
+    "Brutal theme",
+    "page chrome",
+    "microinteraction discipline"
+  ]
+}
