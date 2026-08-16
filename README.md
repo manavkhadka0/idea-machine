@@ -2,10 +2,13 @@
 
 [![CI](https://github.com/manavkhadka0/idea-machine/actions/workflows/ci.yml/badge.svg)](https://github.com/manavkhadka0/idea-machine/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-cream.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-ff8a3d.svg)](CONTRIBUTING.md)
 
-Spin a **platform**, a **product**, and a **niche**. Lock the combo. Share it. Build it.
+Out of side-project ideas? Pull the lever.
 
-The machine is one page. The community owns the word banks.
+Idea Machine spins a **platform**, a **product**, and a **niche** into a one-line brief — "Let's build a mobile CRM for barbers" — then lets you lock the combo, share it, or mark it built. No account, no backend, no gallery. Just a slot machine for your next build.
+
+The machine is one page. The community owns the word banks — see [Contribute a word](#contribute-a-word) below.
 
 ![Idea Machine](public/og.png)
 
@@ -64,6 +67,15 @@ Unknown params are ignored and the machine spins as usual. Locked ideas also sta
 
 TanStack Start, Vite, React, Framer Motion. Styling is Hallmark Brutal tokens in `tokens.css` — please do not drive-by restyle it.
 
+## Contributing
+
+This is open source and PRs are welcome. Adding a word is the fastest way in — see [Contribute a word](#contribute-a-word) above and [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide. Please open an issue before any structural or visual change.
+
+## Author
+
+**Er. Manav Khadka**
+Co-founder, [Baliyo Technologies](https://github.com/manavkhadka0)
+
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) — free to use, fork, and build on.
