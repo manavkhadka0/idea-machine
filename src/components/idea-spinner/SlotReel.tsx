@@ -10,6 +10,7 @@ interface SlotReelProps {
   itemHeight: number
   label: string
   narrow?: boolean
+  idle?: boolean
 }
 
 export function SlotReel({
@@ -21,6 +22,7 @@ export function SlotReel({
   itemHeight,
   label,
   narrow,
+  idle,
 }: SlotReelProps) {
   const classes = [
     'slot-reel',
@@ -34,19 +36,27 @@ export function SlotReel({
   return (
     <span className={classes} style={{ height: itemHeight }} aria-label={label}>
       <span className="slot-reel__label">{label}</span>
-      <span className="slot-reel__fade slot-reel__fade--top" />
-      <span className="slot-reel__fade slot-reel__fade--bottom" />
-      <motion.span className="slot-reel__track" style={{ y, filter }}>
-        {items.map((word, i) => (
-          <span
-            className="slot-reel__item"
-            key={`${word}-${i}`}
-            style={{ height: itemHeight }}
-          >
-            {word}
-          </span>
-        ))}
-      </motion.span>
+      {idle ? (
+        <span className="slot-reel__idle" aria-hidden="true">
+          —
+        </span>
+      ) : (
+        <>
+          <span className="slot-reel__fade slot-reel__fade--top" />
+          <span className="slot-reel__fade slot-reel__fade--bottom" />
+          <motion.span className="slot-reel__track" style={{ y, filter }}>
+            {items.map((word, i) => (
+              <span
+                className="slot-reel__item"
+                key={`${word}-${i}`}
+                style={{ height: itemHeight }}
+              >
+                {word}
+              </span>
+            ))}
+          </motion.span>
+        </>
+      )}
     </span>
   )
 }

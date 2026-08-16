@@ -29,6 +29,15 @@ import './idea-spinner.css'
 
 const ITEM_HEIGHT = 144
 
+const IDLE_HOOK =
+  'Somewhere out there, a business is waiting for exactly this. Pull the lever and find them.'
+
+const SPIN_MESSAGES = [
+  'Scouting for a business that needs this…',
+  'Deciding what to build them…',
+  'Locking in the niche…',
+]
+
 export function IdeaSpinner({
   search,
 }: {
@@ -67,6 +76,7 @@ export function IdeaSpinner({
   )
   const [saved, setSaved] = useState<LockedIdea[]>([])
   const [flash, setFlash] = useState(false)
+  const [spinMessageIndex, setSpinMessageIndex] = useState(0)
   const liveId = useId()
   const booted = useRef(Boolean(shared))
 
@@ -93,17 +103,6 @@ export function IdeaSpinner({
       setBuilt(Boolean(prior?.built))
       setSaved(saveLockedIdea(next))
       if (prior?.built) setSaved(markLockedIdeaBuilt(next))
-    },
-    [platformReel.landOn, typeReel.landOn, nicheReel.landOn],
-  )
-
-  const landInitial = useCallback(
-    (next: Idea) => {
-      platformReel.landOn(next.platform)
-      typeReel.landOn(next.type)
-      nicheReel.landOn(next.niche)
-      setIdea(next)
-      setSpinning(false)
     },
     [platformReel.landOn, typeReel.landOn, nicheReel.landOn],
   )
@@ -185,22 +184,26 @@ export function IdeaSpinner({
   }, [idea, spinning])
 
   useEffect(() => {
+    if (!spinning) {
+      setSpinMessageIndex(0)
+      return
+    }
+    const id = window.setInterval(() => {
+      setSpinMessageIndex((i) => (i + 1) % SPIN_MESSAGES.length)
+    }, 1100)
+    return () => window.clearInterval(id)
+  }, [spinning])
+
+  useEffect(() => {
     const next = resolveIdea(search)
     if (next) {
       landShared(next)
       booted.current = true
       return
     }
-    if (!booted.current) {
-      booted.current = true
-      // Land on a settled, non-vague combo immediately — no auto-spin on
-      // load. The lever is what starts the first real spin.
-      const type = APP_TYPES[Math.floor(Math.random() * APP_TYPES.length)]
-      const pool = compatibleNiches(type)
-      const niche = pool[Math.floor(Math.random() * pool.length)]
-      const platform = PLATFORMS[Math.floor(Math.random() * PLATFORMS.length)]
-      landInitial({ platform, type, niche })
-    }
+    // No shared idea and nothing spun yet — leave the reels empty. The
+    // lever is what starts the first spin, not the page load.
+    booted.current = true
     // Search params are the only input. Spin/land identities would retrigger this.
   }, [search.p, search.t, search.n])
 
@@ -219,7 +222,9 @@ export function IdeaSpinner({
       ? 'BUILT'
       : locked
         ? 'LOCKED'
-        : 'READY'
+        : idea
+          ? 'READY'
+          : 'IDLE'
 
   const liveMessage = built
     ? `Built: a ${idea?.platform} ${idea?.type} for ${idea?.niche}.`
@@ -266,6 +271,14 @@ export function IdeaSpinner({
             LET&rsquo;S BUILD A
           </h1>
 
+          {status === 'idle' ? (
+            <p className="hero__hook">{IDLE_HOOK}</p>
+          ) : status === 'spinning' ? (
+            <p className="hero__hook hero__hook--spin" key={spinMessageIndex}>
+              {SPIN_MESSAGES[spinMessageIndex]}
+            </p>
+          ) : null}
+
           <div className={`console ${locked ? 'console--locked' : ''}`}>
             <div
               className="console__stage"
@@ -277,6 +290,7 @@ export function IdeaSpinner({
                 filter={platformReel.filter}
                 landed={platformReel.landed}
                 locked={locked}
+                idle={status === 'idle'}
                 itemHeight={ITEM_HEIGHT}
                 label="Platform"
                 narrow
@@ -287,6 +301,7 @@ export function IdeaSpinner({
                 filter={typeReel.filter}
                 landed={typeReel.landed}
                 locked={locked}
+                idle={status === 'idle'}
                 itemHeight={ITEM_HEIGHT}
                 label="Product"
               />
@@ -297,6 +312,7 @@ export function IdeaSpinner({
                 filter={nicheReel.filter}
                 landed={nicheReel.landed}
                 locked={locked}
+                idle={status === 'idle'}
                 itemHeight={ITEM_HEIGHT}
                 label="Niche"
               />
