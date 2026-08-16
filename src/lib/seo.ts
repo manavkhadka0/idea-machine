@@ -11,12 +11,17 @@ const OG_IMAGE_WIDTH = '1200'
 const OG_IMAGE_HEIGHT = '630'
 const OG_IMAGE_ALT = 'Idea Machine — Spin. Lock. Build.'
 
-/** Production: set VITE_SITE_URL with no trailing slash. Dev falls back to local. */
+// Falls back to the known production deploy so og:image/og:url are always
+// absolute — most link-preview crawlers (Slack, iMessage, X) won't resolve
+// a relative URL against the page, so this can't be allowed to go empty.
+const PRODUCTION_ORIGIN = 'https://idea-machine-puce.vercel.app'
+
+/** Set VITE_SITE_URL to override (e.g. a custom domain). Dev falls back to local. */
 export function siteOrigin() {
   const raw = import.meta.env.VITE_SITE_URL as string | undefined
   if (raw) return raw.replace(/\/$/, '')
   if (import.meta.env.DEV) return 'http://localhost:3002'
-  return ''
+  return PRODUCTION_ORIGIN
 }
 
 type HeadMeta = {
@@ -31,14 +36,18 @@ export function pageHead({
   title,
   description,
   path = '/',
+  image: imageOverride,
+  imageAlt = OG_IMAGE_ALT,
 }: {
   title: string
   description: string
   path?: string
+  image?: string
+  imageAlt?: string
 }) {
   const origin = siteOrigin()
-  const canonical = origin ? `${origin}${path}` : path
-  const image = origin ? `${origin}${OG_IMAGE_PATH}` : OG_IMAGE_PATH
+  const canonical = `${origin}${path}`
+  const image = imageOverride ?? `${origin}${OG_IMAGE_PATH}`
 
   const meta: HeadMeta[] = [
     { title },
@@ -59,13 +68,13 @@ export function pageHead({
     { property: 'og:image:type', content: 'image/png' },
     { property: 'og:image:width', content: OG_IMAGE_WIDTH },
     { property: 'og:image:height', content: OG_IMAGE_HEIGHT },
-    { property: 'og:image:alt', content: OG_IMAGE_ALT },
+    { property: 'og:image:alt', content: imageAlt },
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:url', content: canonical },
     { name: 'twitter:image', content: image },
-    { name: 'twitter:image:alt', content: OG_IMAGE_ALT },
+    { name: 'twitter:image:alt', content: imageAlt },
   ]
 
   return {
@@ -79,7 +88,6 @@ export function pageHead({
 
 export function webAppJsonLd() {
   const origin = siteOrigin()
-  const image = origin ? `${origin}${OG_IMAGE_PATH}` : OG_IMAGE_PATH
 
   return {
     '@context': 'https://schema.org',
@@ -88,12 +96,12 @@ export function webAppJsonLd() {
     description: siteDescription,
     applicationCategory: 'BusinessApplication',
     operatingSystem: 'Any',
-    image,
+    image: `${origin}${OG_IMAGE_PATH}`,
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'USD',
     },
-    ...(origin ? { url: origin } : {}),
+    url: origin,
   }
 }
