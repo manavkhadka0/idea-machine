@@ -97,6 +97,17 @@ export function IdeaSpinner({
     [platformReel.landOn, typeReel.landOn, nicheReel.landOn],
   )
 
+  const landInitial = useCallback(
+    (next: Idea) => {
+      platformReel.landOn(next.platform)
+      typeReel.landOn(next.type)
+      nicheReel.landOn(next.niche)
+      setIdea(next)
+      setSpinning(false)
+    },
+    [platformReel.landOn, typeReel.landOn, nicheReel.landOn],
+  )
+
   const runSpin = useCallback(async () => {
     setSpinning(true)
     setLocked(false)
@@ -182,7 +193,13 @@ export function IdeaSpinner({
     }
     if (!booted.current) {
       booted.current = true
-      void runSpin()
+      // Land on a settled, non-vague combo immediately — no auto-spin on
+      // load. The lever is what starts the first real spin.
+      const type = APP_TYPES[Math.floor(Math.random() * APP_TYPES.length)]
+      const pool = compatibleNiches(type)
+      const niche = pool[Math.floor(Math.random() * pool.length)]
+      const platform = PLATFORMS[Math.floor(Math.random() * PLATFORMS.length)]
+      landInitial({ platform, type, niche })
     }
     // Search params are the only input. Spin/land identities would retrigger this.
   }, [search.p, search.t, search.n])
