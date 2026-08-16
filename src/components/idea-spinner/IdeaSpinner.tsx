@@ -8,6 +8,7 @@ import {
   NICHES,
   PLATFORMS,
   comboCount,
+  compatibleNiches,
   ideaSentence,
   ideaShareSearch,
   ideasEqual,
@@ -103,10 +104,17 @@ export function IdeaSpinner({
     setIdea(null)
     setCopyState('default')
     writeSearch(null)
+
+    // Pick the type first, then only land a niche in a compatible trade —
+    // never a nonsense pairing like "warehouse for tattoo shops."
+    const nextType = APP_TYPES[Math.floor(Math.random() * APP_TYPES.length)]
+    const pool = compatibleNiches(nextType)
+    const nextNiche = pool[Math.floor(Math.random() * pool.length)]
+
     const [platform, type, niche] = await Promise.all([
       platformReel.spin(0),
-      typeReel.spin(0.18),
-      nicheReel.spin(0.36),
+      typeReel.spin(0.18, nextType),
+      nicheReel.spin(0.36, nextNiche),
     ])
     setIdea(resolveIdea({ p: platform, t: type, n: niche }))
     setSpinning(false)
@@ -242,7 +250,10 @@ export function IdeaSpinner({
           </h1>
 
           <div className={`console ${locked ? 'console--locked' : ''}`}>
-            <div className="console__stage" data-flash={flash ? 'true' : 'false'}>
+            <div
+              className="console__stage"
+              data-flash={flash ? 'true' : 'false'}
+            >
               <SlotReel
                 items={platformReel.items}
                 y={platformReel.y}

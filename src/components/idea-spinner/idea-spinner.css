@@ -220,7 +220,7 @@
 @media (min-width: 32rem) {
   .console__stage {
     grid-template-columns:
-      minmax(7.5rem, 0.28fr)
+      minmax(9.5rem, 0.28fr)
       minmax(0, 1fr)
       auto
       minmax(0, 1.15fr)
@@ -290,6 +290,21 @@
   flex: none;
 }
 
+.lever__shadow {
+  position: absolute;
+  left: 50%;
+  bottom: -0.1rem;
+  width: 2.5rem;
+  height: 0.4rem;
+  margin-left: -1.25rem;
+  background: radial-gradient(
+    closest-side,
+    color-mix(in oklch, var(--color-slab-ink) 45%, transparent),
+    transparent
+  );
+  filter: blur(1.5px);
+}
+
 .lever__arm {
   position: absolute;
   left: 50%;
@@ -297,22 +312,35 @@
   width: 0.3125rem;
   height: 3.5rem;
   margin-left: -0.15625rem;
-  background: var(--color-slab-ink);
+  background: linear-gradient(
+    90deg,
+    var(--color-slab-ink) 0%,
+    color-mix(in oklch, var(--color-slab-ink) 55%, white 45%) 50%,
+    var(--color-slab-ink) 100%
+  );
   transform-origin: bottom center;
   will-change: transform;
 }
 
 .lever__grip {
   position: absolute;
-  top: -0.5rem;
+  top: -0.55rem;
   left: 50%;
-  width: 1.125rem;
-  height: 1.125rem;
-  transform: translateX(-50%);
-  background: var(--color-accent);
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: -0.625rem;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    color-mix(in oklch, var(--color-accent) 100%, white 40%) 0%,
+    var(--color-accent) 55%,
+    color-mix(in oklch, var(--color-accent) 100%, black 30%) 100%
+  );
   outline: var(--rule-hair) solid var(--color-slab-ink);
   outline-offset: -1px;
   transition: outline-width var(--dur-short) var(--ease-out);
+  transform-origin: center;
+  will-change: transform;
 }
 
 .lever[data-pulling='true'] .lever__grip {
@@ -325,8 +353,13 @@
   bottom: 0;
   width: 1.75rem;
   height: 0.3rem;
-  transform: translateX(-50%);
-  background: var(--color-slab-ink);
+  margin-left: -0.875rem;
+  background: linear-gradient(
+    90deg,
+    var(--color-slab-ink) 0%,
+    color-mix(in oklch, var(--color-slab-ink) 60%, white 30%) 50%,
+    var(--color-slab-ink) 100%
+  );
 }
 
 .lock-stamp {
@@ -436,11 +469,10 @@
   display: block;
   width: 100%;
   overflow: hidden;
-  background: var(--color-slab);
+  background: var(--color-slab-2);
   color: var(--color-slab-ink);
   min-width: 0;
   isolation: isolate;
-  transition: background-color var(--dur-short) var(--ease-out);
 }
 
 .slot-reel__label {
@@ -462,16 +494,9 @@
   width: 100%;
 }
 
-.slot-reel--landed {
-  background: var(--color-slab);
-}
-
-.slot-reel--locked {
-  background: var(--color-slab);
-}
-
-.slot-reel:not(.slot-reel--landed) {
-  background: var(--color-slab-2);
+.slot-reel--narrow .slot-reel__item {
+  padding-inline: var(--space-sm);
+  font-size: clamp(0.95rem, 1vw + 0.7rem, 1.4rem);
 }
 
 .slot-reel__fade {
@@ -485,19 +510,11 @@
 
 .slot-reel__fade--top {
   top: 0;
-  background: linear-gradient(180deg, var(--color-slab), transparent);
+  background: linear-gradient(180deg, var(--color-slab-2), transparent);
 }
 
 .slot-reel__fade--bottom {
   bottom: 0;
-  background: linear-gradient(0deg, var(--color-slab), transparent);
-}
-
-.slot-reel:not(.slot-reel--landed) .slot-reel__fade--top {
-  background: linear-gradient(180deg, var(--color-slab-2), transparent);
-}
-
-.slot-reel:not(.slot-reel--landed) .slot-reel__fade--bottom {
   background: linear-gradient(0deg, var(--color-slab-2), transparent);
 }
 
